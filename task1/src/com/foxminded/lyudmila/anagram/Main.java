@@ -3,12 +3,11 @@ package com.foxminded.lyudmila.anagram;
 import java.util.Scanner;
 
 public class Main {
+	public static final String ENTER = "enter";
+	public static final String TEST = "test";
+	public static final String EXIT = "exit";
 
 	public static void main(String[] args) {
-		final String ENTER = "enter";
-		final String TEST = "test";
-		final String EXIT = "exit";
-
 		Scanner scanner = new Scanner(System.in);
 
 		loop: while (true) {
@@ -20,12 +19,12 @@ public class Main {
 			switch (action) {
 			case ENTER:
 				System.out.println("\nEnter string: ");
-				System.out.println("\nResult: " + new Anagrams().reversesLetterInWords(scanner.nextLine()));
+				System.out.println("\nResult: " + new Anagrams().reversesLettersInWords(scanner.nextLine()));
 				break;
 			case TEST:
 				String testText = "abcd1j absd!jh";
 				System.out.println("\nTest: " + testText);
-				System.out.println("\nResult: " + new Anagrams().reversesLetterInWords("abcd1j absd!jh"));
+				System.out.println("\nResult: " + new Anagrams().reversesLettersInWords("abcd1j absd!jh"));
 				break;
 			case EXIT:
 				break loop;

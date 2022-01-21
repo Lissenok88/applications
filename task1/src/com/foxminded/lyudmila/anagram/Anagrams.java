@@ -1,37 +1,31 @@
 package com.foxminded.lyudmila.anagram;
 
-import java.util.ArrayList;
-
 public class Anagrams {
 
-	public String reversesLetterInWords(String string) {
+	public String reversesLettersInWords(String string) {
 		String[] splitText = string.split(" ");
-		ArrayList<String> arrayAnagramWord = new ArrayList<>();
-		for (String word : splitText) {
-			arrayAnagramWord.add(reversesAllLetter(new StringBuilder(word)));
+		for (int i = 0; i < splitText.length; i++) {
+			splitText[i] = reversesAllLetters(new StringBuilder(splitText[i]));
 		}
-		return String.join(" ", arrayAnagramWord);
+		return String.join(" ", splitText);
+
 	}
 
-	private String reversesAllLetter(StringBuilder word) {
-		int indexStart = 0;
-		int indexEnd = word.length() - 1;
-		while (indexStart < indexEnd) {
-			if (Character.isLetter(word.charAt(indexStart)) 
-					&& Character.isLetter(word.charAt(indexEnd))) {
-				char ch = word.charAt(indexStart);
-				word.setCharAt(indexStart, word.charAt(indexEnd));
-				word.setCharAt(indexEnd, ch);
-				indexStart++;
-				indexEnd--;
-			} else if (!Character.isLetter(word.charAt(indexStart))) {
-				indexStart++;
-			} else if (!Character.isLetter(word.charAt(indexEnd))) {
-				indexEnd--;
-			} else {
-				indexStart++;
-				indexEnd--;
+	private String reversesAllLetters(StringBuilder word) {
+		int start = 0;
+		int end = word.length() - 1;
+		while (start < end) {
+			while (!Character.isLetter(word.charAt(start)) && start < end) {
+				start += 1;
 			}
+			while (!Character.isLetter(word.charAt(end)) && start < end) {
+				end -= 1;
+			}
+			final char letter = word.charAt(start);
+			word.setCharAt(start, word.charAt(end));
+			word.setCharAt(end, letter);
+			start += 1;
+			end -= 1;
 
 		}
 		return word.toString();
