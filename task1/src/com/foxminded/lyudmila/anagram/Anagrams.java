@@ -14,27 +14,26 @@ public class Anagrams {
 	}
 
 	private String reversesAllLetter(StringBuilder word) {
-		StringBuilder anagram = new StringBuilder();
-		StringBuilder reverseWordOfSymbols = searchAllLetterInWord(word).reverse();
-		int indexSymbols = 0;
-		for (int indexWord = 0; indexWord < word.length(); indexWord++) {
-			if (Character.isLetter(word.charAt(indexWord))) {
-				anagram.append(reverseWordOfSymbols.charAt(indexSymbols));
-				indexSymbols++;
+		int indexStart = 0;
+		int indexEnd = word.length() - 1;
+		while (indexStart < indexEnd) {
+			if (Character.isLetter(word.charAt(indexStart)) 
+					&& Character.isLetter(word.charAt(indexEnd))) {
+				char ch = word.charAt(indexStart);
+				word.setCharAt(indexStart, word.charAt(indexEnd));
+				word.setCharAt(indexEnd, ch);
+				indexStart++;
+				indexEnd--;
+			} else if (!Character.isLetter(word.charAt(indexStart))) {
+				indexStart++;
+			} else if (!Character.isLetter(word.charAt(indexEnd))) {
+				indexEnd--;
 			} else {
-				anagram.append(word.charAt(indexWord));
+				indexStart++;
+				indexEnd--;
 			}
-		}
-		return anagram.toString();
-	}
 
-	private StringBuilder searchAllLetterInWord(StringBuilder word) {
-		StringBuilder wordOfSymbols = new StringBuilder();
-		for (int indexWord = 0; indexWord < word.length(); indexWord++) {
-			if (Character.isLetter(word.charAt(indexWord))) {
-				wordOfSymbols.append(word.charAt(indexWord));
-			}
 		}
-		return wordOfSymbols;
+		return word.toString();
 	}
 }
