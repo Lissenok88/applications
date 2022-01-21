@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 public class Anagrams {
 
-	public String reversesLetterInWordsOfString(String string) {
+	public String reversesLetterInWords(String string) {
 		String[] splitText = string.split(" ");
 		ArrayList<String> arrayAnagramWord = new ArrayList<>();
 		for (String word : splitText) {
-			arrayAnagramWord.add(reversesLetterInWord(word));
+			arrayAnagramWord.add(reversesAllLetter(new StringBuilder(word)));
 		}
 		return String.join(" ", arrayAnagramWord);
 	}
 
-	public String reversesLetterInWord(String word) {
+	private String reversesAllLetter(StringBuilder word) {
 		StringBuilder anagram = new StringBuilder();
-		String reverseWordOfSymbols = new StringBuilder(searchAllLetterInWord(word)).reverse().toString();
+		StringBuilder reverseWordOfSymbols = searchAllLetterInWord(word).reverse();
 		int indexSymbols = 0;
 		for (int indexWord = 0; indexWord < word.length(); indexWord++) {
 			if (Character.isLetter(word.charAt(indexWord))) {
@@ -28,13 +28,13 @@ public class Anagrams {
 		return anagram.toString();
 	}
 
-	public String searchAllLetterInWord(String word) {
+	private StringBuilder searchAllLetterInWord(StringBuilder word) {
 		StringBuilder wordOfSymbols = new StringBuilder();
 		for (int indexWord = 0; indexWord < word.length(); indexWord++) {
 			if (Character.isLetter(word.charAt(indexWord))) {
 				wordOfSymbols.append(word.charAt(indexWord));
 			}
 		}
-		return wordOfSymbols.toString();
+		return wordOfSymbols;
 	}
 }

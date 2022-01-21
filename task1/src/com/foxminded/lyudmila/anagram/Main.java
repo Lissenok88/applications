@@ -5,6 +5,10 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
+		final String ENTER = "enter";
+		final String TEST = "test";
+		final String EXIT = "exit";
+
 		Scanner scanner = new Scanner(System.in);
 
 		loop: while (true) {
@@ -14,16 +18,16 @@ public class Main {
 			String action = scanner.nextLine().toLowerCase();
 
 			switch (action) {
-			case "enter":
+			case ENTER:
 				System.out.println("\nEnter string: ");
-				System.out.println("\nResult: " + new Anagrams().reversesLetterInWordsOfString(scanner.nextLine()));
+				System.out.println("\nResult: " + new Anagrams().reversesLetterInWords(scanner.nextLine()));
 				break;
-			case "test":
+			case TEST:
 				String testText = "abcd1j absd!jh";
 				System.out.println("\nTest: " + testText);
-				System.out.println("\nResult: " + new Anagrams().reversesLetterInWordsOfString("abcd1j absd!jh"));
+				System.out.println("\nResult: " + new Anagrams().reversesLetterInWords("abcd1j absd!jh"));
 				break;
-			case "exit":
+			case EXIT:
 				break loop;
 			default:
 				System.out.println("\nIncorrect enter.");
