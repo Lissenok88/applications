@@ -11,22 +11,22 @@ public class Anagrams {
     }
 
     private String reversesAllLetters(String word) {
-        StringBuilder reversesWord = new StringBuilder(word);
+        StringBuilder result = new StringBuilder(word);
         int start = 0;
-        int end = reversesWord.length() - 1;
+        int end = result.length() - 1;
         while (start < end) {
-            if (!Character.isLetter(reversesWord.charAt(start))) {
+            if (!Character.isLetter(result.charAt(start))) {
                 start++;
-            } else if (!Character.isLetter(reversesWord.charAt(end))) {
+            } else if (!Character.isLetter(result.charAt(end))) {
                 end--;
             } else {
-                final char letter = reversesWord.charAt(start);
-                reversesWord.setCharAt(start, reversesWord.charAt(end));
-                reversesWord.setCharAt(end, letter);
+                final char letter = result.charAt(start);
+                result.setCharAt(start, result.charAt(end));
+                result.setCharAt(end, letter);
                 start++;
                 end--;
             }
         }
-        return reversesWord.toString();
+        return result.toString();
     }
 }
