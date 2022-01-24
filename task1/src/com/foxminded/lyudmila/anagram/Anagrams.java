@@ -1,32 +1,32 @@
 package com.foxminded.lyudmila.anagram;
 
 public class Anagrams {
-
 	public String reversesLettersInWords(String string) {
-		String[] splitText = string.split(" ");
-		for (int i = 0; i < splitText.length; i++) {
-			splitText[i] = reversesAllLetters(new StringBuilder(splitText[i]));
+		String[] words = string.split(" ");
+		for (int i = 0; i < words.length; i++) {
+			words[i] = reversesAllLetters(words[i]);
 		}
-		return String.join(" ", splitText);
+		return String.join(" ", words);
 
 	}
 
-	private String reversesAllLetters(StringBuilder word) {
+	private String reversesAllLetters(String word) {
+		StringBuilder reversesWord = new StringBuilder(word);
 		int start = 0;
-		int end = word.length() - 1;
+		int end = reversesWord.length() - 1;
 		while (start < end) {
-			if (!Character.isLetter(word.charAt(start))) {
-				start += 1;
-			} else if (!Character.isLetter(word.charAt(end))) {
-				end -= 1;
+			if (!Character.isLetter(reversesWord.charAt(start))) {
+				start++;
+			} else if (!Character.isLetter(reversesWord.charAt(end))) {
+				end--;
 			} else {
-				final char letter = word.charAt(start);
-				word.setCharAt(start, word.charAt(end));
-				word.setCharAt(end, letter);
-				start += 1;
-				end -= 1;
+				final char letter = reversesWord.charAt(start);
+				reversesWord.setCharAt(start, reversesWord.charAt(end));
+				reversesWord.setCharAt(end, letter);
+				start++;
+				end--;
 			}
 		}
-		return word.toString();
+		return reversesWord.toString();
 	}
 }
