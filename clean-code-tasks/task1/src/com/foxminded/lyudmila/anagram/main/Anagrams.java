@@ -1,13 +1,14 @@
-package com.foxminded.lyudmila.anagram;
-
 public class Anagrams {
     public String reversesLettersInWords(String string) {
         String[] words = string.split(" ");
-        for (int i = 0; i < words.length; i++) {
-            words[i] = reversesAllLetters(words[i]);
+        if (words.length != 0) {
+            for (int i = 0; i < words.length; i++) {
+                words[i] = reversesAllLetters(words[i]);
+            }
+            return String.join(" ", words);
+        } else {
+            return string;
         }
-        return String.join(" ", words);
-
     }
 
     private String reversesAllLetters(String word) {
