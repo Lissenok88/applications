@@ -1,3 +1,5 @@
+package com.foxminded.lyudmila.anagram;
+
 import java.util.Scanner;
 
 public class Main {

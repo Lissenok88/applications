@@ -1,3 +1,5 @@
+package com.foxminded.lyudmila.anagram;
+
 public class Anagrams {
     public String reversesLettersInWords(String string) {
         String[] words = string.split(" ");
