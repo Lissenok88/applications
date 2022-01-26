@@ -5,16 +5,16 @@ public class Anagrams {
         String[] words = string.split(" ");
         if (string == null || words.length == 0) {
             return string;
-        } else {
-            for (int i = 0; i < words.length; i++) {
-                words[i] = reversesAllLetters(words[i]);
-            }
-            String result =String.join(" ", words);
-            if (result.length() < string.length()) {
-                result += string.substring(result.length());
-            }
-            return result;
         }
+        for (int i = 0; i < words.length; i++) {
+            words[i] = reversesAllLetters(words[i]);
+        }
+        String result = String.join(" ", words);
+        if (result.length() < string.length()) {
+            result += string.substring(result.length());
+        }
+        return result;
+
     }
 
     private String reversesAllLetters(String word) {
