@@ -1,82 +1,87 @@
 package com.foxminded.lyudmila.anagram;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AnagramsTest {
-    private final Anagrams anagram = new Anagrams();
+public class AnagramsTest {
+    Anagrams anagram;
+
+    @BeforeEach()
+    void createNewAnagrams() {
+        anagram = new Anagrams();
+    }
 
     @Test
-    void givenEmptyString_onReversesLettersInWords_shouldEmptyString() {
+    void reversesLettersInWords_shouldReturnEmptyString_whenEmptyString() {
         assertEquals("", anagram.reversesLettersInWords(""));
     }
 
     @Test
-    void givenNull_onReversesLettersInWords_shouldThrowException() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+    void reversesLettersInWords_shouldReturnThrowException_whenNull() {
+        assertThrows(NullPointerException.class, () -> {
             anagram.reversesLettersInWords(null);
         });
-        assertNotNull("Null parameters are not allowed", exception.getMessage());
     }
 
     @Test
-    void givenSingleSpace_onReversesLettersInWords_shouldSingleSpace() {
+    void reversesLettersInWords_shouldReturnSingleSpace_whenSingleSpace() {
         assertEquals(" ", anagram.reversesLettersInWords(" "));
     }
 
     @Test
-    void givenSeveralSpaces_onReversesLettersInWords_shouldSeveralSpaces() {
+    void reversesLettersInWords_shouldReturnSeveralSpaces_whenSeveralSpaces() {
         assertEquals("   ", anagram.reversesLettersInWords("   "));
     }
 
     @Test
-    void givenSingleSymbol_onReversesLettersInWords_shouldSingleSymbol() {
+    void reversesLettersInWords_shouldReturnSingleSymbol_whenSingleSymbol() {
         assertEquals("1", anagram.reversesLettersInWords("1"));
     }
 
     @Test
-    void givenTwoSpacesAndSymbol_onReversesLettersInWords_shouldTwoSpacesAndSymbol() {
+    void reversesLettersInWords_shouldReturnTwoSpacesAndSymbol_whenTwoSpacesAndSymbol() {
         assertEquals("  2", anagram.reversesLettersInWords("  2"));
     }
 
     @Test
-    void givenTwoWordsWithTwoSpaces_onReversesLettersInWords_shouldTwoWordsWithTwoSpaces() {
+    void reversesLettersInWords_shouldReturnTwoWordsWithTwoSpaces_whenTwoWordsWithTwoSpaces() {
         assertEquals("  fj2k  kj2f", anagram.reversesLettersInWords("  kj2f  fj2k"));
     }
 
     @Test
-    void givenSeveralIdenticalLetters_onReversesLettersInWords_shouldSeveralIdenticalLetters() {
+    void reversesLettersInWords_shouldReturnSeveralIdenticalLetters_whenSeveralIdenticalLetters() {
         assertEquals("aaa", anagram.reversesLettersInWords("aaa"));
     }
 
     @Test
-    void givenSeveralIdenticalLettersAndSymbol_onReversesLettersInWords_shouldSeveralIdenticalLettersAndSymbol() {
+    void reversesLettersInWords_shouldReturnSeveralIdenticalLettersAndSymbol_whenSeveralIdenticalLettersAndSymbol() {
         assertEquals("aa2a", anagram.reversesLettersInWords("aa2a"));
     }
 
     @Test
-    void givenSameUpperAndLowerLettersMixed_onReversesLettersInWords_shouldSameUpperAndLowerLettersMixed() {
+    void reversesLettersInWords_shouldReturnSameUpperAndLowerLettersMixed_whenSameUpperAndLowerLettersMixed() {
         assertEquals("abcAb", anagram.reversesLettersInWords("bAcba"));
     }
 
     @Test
-    void givenSameUpLowLettersMixedAndSymbol_onReversesLettersInWords_shouldSameUpLowLettersMixedAndSymbol() {
+    void reversesLettersInWords_shouldReturnSameUpLowLettersMixedAndSymbol_whenSameUpLowLettersMixedAndSymbol() {
         assertEquals("aacA2b", anagram.reversesLettersInWords("bAca2a"));
     }
 
     @Test
-    void givenDifferentLetters_onReversesLettersInWords_shouldDifferentLetters() {
+    void reversesLettersInWords_shouldReturnDifferentLetters_whenDifferentLetters() {
         assertEquals("abcd", anagram.reversesLettersInWords("dcba"));
     }
 
     @Test
-    void givenOnlySymbols_onReversesLettersInWords_shouldOnlySymbols() {
+    void reversesLettersInWords_shouldReturnOnlySymbols_whenOnlySymbols() {
         assertEquals("+<>", anagram.reversesLettersInWords("+<>"));
     }
 
     @Test
-    void givenFewWords_onReversesLettersInWords_shouldFewWords() {
+    void reversesLettersInWords_shouldReturnSeveralWords_whenSeveralWords() {
         assertEquals("abd sd1f 2fd2g", anagram.reversesLettersInWords("dba fd1s 2gd2f"));
     }
 }
