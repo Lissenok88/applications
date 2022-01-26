@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AnagramsTest {
-    Anagrams anagram;
+    private Anagrams anagram;
 
     @BeforeEach()
     void createNewAnagrams() {
@@ -19,7 +19,7 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnThrowException_whenNull() {
+    void reversesLettersInWords_shouldReturnNull_whenNull() {
         assertThrows(NullPointerException.class, () -> {
             anagram.reversesLettersInWords(null);
         });
@@ -51,22 +51,27 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSeveralIdenticalLetters_whenSeveralIdenticalLetters() {
+    void reversesLettersInWords_shouldReturnSomeIdenticalLetters_whenSomeIdenticalLetters() {
         assertEquals("aaa", anagram.reversesLettersInWords("aaa"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSeveralIdenticalLettersAndSymbol_whenSeveralIdenticalLettersAndSymbol() {
+    void reversesLettersInWords_shouldReturnSomeIdenticalLettersInUpAndLow_whenSomeIdenticalLettersInUpAndLow() {
+        assertEquals("aaaAa", anagram.reversesLettersInWords("aAaaa"));
+    }
+
+    @Test
+    void reversesLettersInWords_shouldReturnSomeIdenticalLettersAndSymbol_whenSomeIdenticalLettersAndSymbol() {
         assertEquals("aa2a", anagram.reversesLettersInWords("aa2a"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSameUpperAndLowerLettersMixed_whenSameUpperAndLowerLettersMixed() {
+    void reversesLettersInWords_shouldReturnSameUpperAndLowerLettersMixed_whenUpperAndLowerLettersMixed() {
         assertEquals("abcAb", anagram.reversesLettersInWords("bAcba"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSameUpLowLettersMixedAndSymbol_whenSameUpLowLettersMixedAndSymbol() {
+    void reversesLettersInWords_shouldReturnUpLowLettersMixedAndSymbol_whenUpLowLettersMixedAndSymbol() {
         assertEquals("aacA2b", anagram.reversesLettersInWords("bAca2a"));
     }
 
@@ -83,5 +88,45 @@ public class AnagramsTest {
     @Test
     void reversesLettersInWords_shouldReturnSeveralWords_whenSeveralWords() {
         assertEquals("abd sd1f 2fd2g", anagram.reversesLettersInWords("dba fd1s 2gd2f"));
+    }
+
+    @Test
+    void reversesLettersInWords_shouldReturnSomeSpacesBeforeAndAfterWords_whenSomeSpacesBeforeAndAfterWords() {
+        assertEquals("   emos gnirts   ", anagram.reversesLettersInWords("   some string   "));
+    }
+
+    @Test
+    void reversesLettersInWords_shouldReturnWordWithNotLatinLetters_whenWordWithNotLatinLetters() {
+        assertEquals("акортс", anagram.reversesLettersInWords("строка"));
+    }
+
+    @Test
+    void reversesLettersInWords_shouldReturnWordsWithNotLatinLetters_whenWordsWithNotLatinLetters() {
+        assertEquals("акортс авкуб", anagram.reversesLettersInWords("строка буква"));
+    }
+
+    @Test
+    void reversesLettersInWords_shouldReturnWordWithNotLatinLettersAndSymbol_whenWordWithNotLatinLettersAndSymbol() {
+        assertEquals("акор2тс", anagram.reversesLettersInWords("стро2ка"));
+    }
+
+    @Test
+    void reversesLettersInWords_shouldReturnSomeIdenticalNotLatinLetters_whenWordWithSomeIdenticalNotLatinLetters() {
+        assertEquals("ддд", anagram.reversesLettersInWords("ддд"));
+    }
+
+    @Test
+    void reversesLettersInWords_shouldReturnSomeIdenticalInUpAndLowNotLatin_whenSomeIdenticalInUpAndLowNotLatin() {
+        assertEquals("дДддд", anagram.reversesLettersInWords("дддДд"));
+    }
+
+    @Test
+    void reversesLettersInWords_shouldReturnLatinAndNotLatinLettersAndSymbols_whenLatinAndNotLatinLettersAndSymbols() {
+        assertEquals("fff5,ддд", anagram.reversesLettersInWords("ддд5,fff"));
+    }
+
+    @Test
+    void reversesLettersInWords_shouldReturnNotLatinLettersAndSomeSpaces_whenNotLatinLettersAndSomeSpaces() {
+        assertEquals("   акортс ловмис  ", anagram.reversesLettersInWords("   строка символ  "));
     }
 }

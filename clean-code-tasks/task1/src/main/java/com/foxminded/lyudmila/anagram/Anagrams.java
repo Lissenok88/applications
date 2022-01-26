@@ -9,7 +9,11 @@ public class Anagrams {
             for (int i = 0; i < words.length; i++) {
                 words[i] = reversesAllLetters(words[i]);
             }
-            return String.join(" ", words);
+            String result =String.join(" ", words);
+            if (result.length() < string.length()) {
+                result += string.substring(result.length());
+            }
+            return result;
         }
     }
 
