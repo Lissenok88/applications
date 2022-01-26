@@ -2,15 +2,20 @@ package com.foxminded.lyudmila.anagram;
 
 public class Anagrams {
     public String reversesLettersInWords(String string) {
-        String[] words = string.split(" ");
-        if (words.length != 0) {
-            for (int i = 0; i < words.length; i++) {
-                words[i] = reversesAllLetters(words[i]);
-            }
-            return String.join(" ", words);
+        if (string == null) {
+            throw new NullPointerException("Null parameters are not allowed");
         } else {
-            return string;
+            String[] words = string.split(" ");
+            if (words.length != 0) {
+                for (int i = 0; i < words.length; i++) {
+                    words[i] = reversesAllLetters(words[i]);
+                }
+                return String.join(" ", words);
+            } else {
+                return string;
+            }
         }
+
     }
 
     private String reversesAllLetters(String word) {
