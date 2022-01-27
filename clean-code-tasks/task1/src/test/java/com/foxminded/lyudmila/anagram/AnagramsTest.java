@@ -106,7 +106,7 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversWordsLeaveNumberInPlace_whenInputContainSeveralWords() {
+    void reversesLettersInWords_shouldReturnReverseWordsLeaveNumberInPlace_whenInputContainSeveralWords() {
         String actual = new Anagrams().reversesLettersInWords("dba fd1s 2gd2f");
         String expected = "abd sd1f 2fd2g";
         assertEquals(expected, actual);
@@ -120,7 +120,7 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversString_whenInputContainNotLatinLetters() {
+    void reversesLettersInWords_shouldReturnReverseString_whenInputContainNotLatinLetters() {
         String actual = new Anagrams().reversesLettersInWords("строка");
         String expected = "акортс";
         assertEquals(expected, actual);
@@ -134,7 +134,7 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversStringLeaveNumberInPlace_whenInputContainNotLatinLettersAndNumber() {
+    void reversesLettersInWords_shouldReturnReverseStringLeaveNumberInPlace_whenInputContainNotLatinLettersAndNumber() {
         String actual = new Anagrams().reversesLettersInWords("стро2ка");
         String expected = "акор2тс";
         assertEquals(expected, actual);
@@ -155,14 +155,14 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversStringLeaveSymbolsInPlace_whenInputContainLatinAndNotLatinLettersAndDifferentSymbols() {
+    void reversesLettersInWords_shouldReturnReverseStringLeaveSymbolsInPlace_whenInputContainLatinAndNotLatinLettersAndDifferentSymbols() {
         String actual = new Anagrams().reversesLettersInWords("ддд5,fff");
         String expected = "fff5,ддд";
         assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversStringLeaveSpacesInPlace_whenInputContainMultipleSpacesBeginAndEndStringAndNotLatinLetters() {
+    void reversesLettersInWords_shouldReturnReverseStringLeaveSpacesInPlace_whenInputContainMultipleSpacesBeginAndEndStringAndNotLatinLetters() {
         String actual = new Anagrams().reversesLettersInWords("   строка символ  ");
         String expected = "   акортс ловмис  ";
         assertEquals(expected, actual);
