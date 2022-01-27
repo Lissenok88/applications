@@ -16,9 +16,8 @@ public class AnagramsTest {
 
     @Test
     void reversesLettersInWords_shouldReturnNull_whenNull() {
-        Executable actual = () -> new Anagrams().reversesLettersInWords(null);
-        Class<NullPointerException> expected = NullPointerException.class;
-        assertThrows(expected, actual);
+        String actual = new Anagrams().reversesLettersInWords(null);
+        assertNull(actual);
     }
 
     @Test
@@ -169,9 +168,9 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWord_ShouldLeaveSymbolsInPlace_whenInputContainBeginSeveralSymbols(){
-       String actual = new Anagrams().reversesLettersInWords("$#&jfks");
-       String expected = "$#&skfj";
-       assertEquals(expected, actual);
+    void reversesLettersInWord_ShouldLeaveSymbolsInPlace_whenInputContainBeginSeveralSymbols() {
+        String actual = new Anagrams().reversesLettersInWords("$#&jfks");
+        String expected = "$#&skfj";
+        assertEquals(expected, actual);
     }
 }
