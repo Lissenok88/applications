@@ -1,132 +1,177 @@
 package com.foxminded.lyudmila.anagram;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AnagramsTest {
-    private Anagrams anagram;
-
-    @BeforeEach()
-    void createNewAnagrams() {
-        anagram = new Anagrams();
-    }
 
     @Test
     void reversesLettersInWords_shouldReturnEmptyString_whenEmptyString() {
-        assertEquals("", anagram.reversesLettersInWords(""));
+        String actual = new Anagrams().reversesLettersInWords("");
+        String expected = "";
+        assertEquals(expected, actual);
     }
 
     @Test
     void reversesLettersInWords_shouldReturnNull_whenNull() {
-        assertThrows(NullPointerException.class, () -> {
-            anagram.reversesLettersInWords(null);
-        });
+        Executable actual = () -> new Anagrams().reversesLettersInWords(null);
+        Class<NullPointerException> expected = NullPointerException.class;
+        assertThrows(expected, actual);
     }
 
     @Test
     void reversesLettersInWords_shouldReturnSingleSpace_whenSingleSpace() {
-        assertEquals(" ", anagram.reversesLettersInWords(" "));
+        String actual = new Anagrams().reversesLettersInWords(" ");
+        String expected = " ";
+        assertEquals(expected, actual);
     }
 
     @Test
     void reversesLettersInWords_shouldReturnAsManySpaces_whenOnlySpaces() {
-        assertEquals("   ", anagram.reversesLettersInWords("   "));
+        String actual = new Anagrams().reversesLettersInWords("   ");
+        String expected = "   ";
+        assertEquals(expected, actual);
     }
 
     @Test
     void reversesLettersInWords_shouldReturnSingleSymbol_whenSingleSymbol() {
-        assertEquals("1", anagram.reversesLettersInWords("1"));
+        String actual = new Anagrams().reversesLettersInWords("1");
+        String expected = "1";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnTwoSpacesAndSymbolOnSamePlace_whenTwoSpacesAndSymbol() {
-        assertEquals("  2", anagram.reversesLettersInWords("  2"));
+    void reversesLettersInWords_shouldReturnSameString_whenInputContainsOnlySpacesAndNumbers() {
+        String actual = new Anagrams().reversesLettersInWords("  2");
+        String expected = "  2";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnTwoSpacesBeforeEachWordAndReverseLatinLettersAndSymbolOnSamePlaceInWords_whenTwoSpacesBeforeEachWordAndWordsWithLatinLettersAndSymbol() {
-        assertEquals("  fj2k  kj2f", anagram.reversesLettersInWords("  kj2f  fj2k"));
+    void reversesLettersInWords_shouldLeaveSpacesInPlace_whenInputContainsTwoSpacesBeforeEachWord() {
+        String actual = new Anagrams().reversesLettersInWords("  kj2f  fj2k");
+        String expected = "  fj2k  kj2f";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversSeveralIdenticalLatinLettersInWord_whenWordWithSeveralIdenticalLatinLetters() {
-        assertEquals("aaa", anagram.reversesLettersInWords("aaa"));
+    void reversesLettersInWords_shouldReturnSameString_whenInputContainsOnlySameLatter() {
+        String actual = new Anagrams().reversesLettersInWords("aaa");
+        String expected = "aaa";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReverseSeveralIdenticalLatinLettersInLowerAndUpperCaseInWord_whenWordWithSeveralIdenticalLatinLettersInLowerAndUpperCase() {
-        assertEquals("aaaAa", anagram.reversesLettersInWords("aAaaa"));
+    void reversesLettersInWords_shouldReturnReverseString_whenInputContainOnlySameLatterInLowerAndUpperCases() {
+        String actual = new Anagrams().reversesLettersInWords("aAaaa");
+        String expected = "aaaAa";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversSeveralIdenticalLatinLettersAndSymbolOnSamePlace_whenWordWithSeveralIdenticalLatinLettersAndSymbol() {
-        assertEquals("aa2a", anagram.reversesLettersInWords("aa2a"));
+    void reversesLettersInWords_shouldReturnSameString_whenInputContainOnlySameLetterAndNumber() {
+        String actual = new Anagrams().reversesLettersInWords("aa2a");
+        String expected = "aa2a";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReverseLatinLettersInUpperAndLowerCaseInWord_whenWordWithLatinLettersInUpperAndLowerCase() {
-        assertEquals("abcAb", anagram.reversesLettersInWords("bAcba"));
+    void reversesLettersInWords_shouldReturnReverseString_whenInputContainLettersInUpperAndLowerCases() {
+        String actual = new Anagrams().reversesLettersInWords("bAcba");
+        String expected = "abcAb";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReverseLatinLettersInUpperAndLowerCaseSymbolOnSamePlaceInWord_whenWordWithLatinLettersInUpperAndLowerCaseAndSymbol() {
-        assertEquals("aacA2b", anagram.reversesLettersInWords("bAca2a"));
+    void reversesLettersInWords_shouldReturnReverseStringLeaveNumberInPlace_whenInputContainLettersInUpperAndLowerCasesAndNumber() {
+        String actual = new Anagrams().reversesLettersInWords("bAca2a");
+        String expected = "aacA2b";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReverseDifferentLatinLettersInLowerCaseInWord_whenWordWithDifferentLatinLettersInLowerCase() {
-        assertEquals("abcd", anagram.reversesLettersInWords("dcba"));
+    void reversesLettersInWords_shouldReturnReverseString_whenInputContainDifferentLetters() {
+        String actual = new Anagrams().reversesLettersInWords("dcba");
+        String expected = "abcd";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnOnlySymbolsOnSamePlaceInWord_whenWordOnlySymbols() {
-        assertEquals("+<>", anagram.reversesLettersInWords("+<>"));
+    void reversesLettersInWords_shouldReturnSameString_whenInputContainOnlySymbols() {
+        String actual = new Anagrams().reversesLettersInWords("+<>");
+        String expected = "+<>";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversLatinLettersInWordsSymbolsOnSamePlace_whenSeveralWordsWithLatinLettersAndSymbols() {
-        assertEquals("abd sd1f 2fd2g", anagram.reversesLettersInWords("dba fd1s 2gd2f"));
+    void reversesLettersInWords_shouldReturnReversStringLeaveNumberInPlace_whenInputContainSeveralWords() {
+        String actual = new Anagrams().reversesLettersInWords("dba fd1s 2gd2f");
+        String expected = "abd sd1f 2fd2g";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnAsManySpacesBeginAndEndStringReversLatinLettersInWords_whenSeveralSpacesBeginAndEndStringWordsWithLatinLetters() {
-        assertEquals("   emos gnirts   ", anagram.reversesLettersInWords("   some string   "));
+    void reversesLettersInWords_shouldReturnLeaveSpacesInPlace_whenInputContainMultipleSpacesBeginAndEndString() {
+        String actual = new Anagrams().reversesLettersInWords("   some string   ");
+        String expected = "   emos gnirts   ";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversNotLatinLettersInWord_whenWordWithNotLatinLetters() {
-        assertEquals("акортс", anagram.reversesLettersInWords("строка"));
+    void reversesLettersInWords_shouldReturnReversString_whenInputContainNotLatinLetters() {
+        String actual = new Anagrams().reversesLettersInWords("строка");
+        String expected = "акортс";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReverseNotLatinLettersInWords_whenWordsWithNotLatinLetters() {
-        assertEquals("акортс авкуб", anagram.reversesLettersInWords("строка буква"));
+    void reversesLettersInWords_shouldReturnReverseString_whenInputContainSeveralWordsWithNotLatinLetters() {
+        String actual = new Anagrams().reversesLettersInWords("строка буква");
+        String expected = "акортс авкуб";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversNotLatinLettersAndSymbolOnSamePlaceInWord_whenWordWithNotLatinLettersAndSymbol() {
-        assertEquals("акор2тс", anagram.reversesLettersInWords("стро2ка"));
+    void reversesLettersInWords_shouldReturnReversStringLeaveNumberInPlace_whenInputContainNotLatinLettersAndNumber() {
+        String actual = new Anagrams().reversesLettersInWords("стро2ка");
+        String expected = "акор2тс";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversSeveralIdenticalNotLatinLettersInWord_whenWordWithSeveralIdenticalNotLatinLetters() {
-        assertEquals("ддд", anagram.reversesLettersInWords("ддд"));
+    void reversesLettersInWords_shouldReturnSameString_whenInputContainOnlySameNotLatinLetter() {
+        String actual = new Anagrams().reversesLettersInWords("ддд");
+        String expected = "ддд";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReverseSeveralIdenticalNotLatinLettersInLowerAndUpperCaseInWord_whenWordWithSeveralIdenticalNotLatinLettersInLowerAndUpperCase() {
-        assertEquals("дДддд", anagram.reversesLettersInWords("дддДд"));
+    void reversesLettersInWords_shouldReturnReverseString_whenInputContainOnlySameNotLatterInLowerAndUpperCases() {
+        String actual = new Anagrams().reversesLettersInWords("дддДд");
+        String expected = "дДддд";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversLatinAndNotLatinLettersAndAllSymbolsOnSamePlaceInWord_whenWordWithLatinAndNotLatinLettersAndDifferentSymbols() {
-        assertEquals("fff5,ддд", anagram.reversesLettersInWords("ддд5,fff"));
+    void reversesLettersInWords_shouldReturnReversStringLeaveSymbolsInPlace_whenInputContainLatinAndNotLatinLettersAndDifferentSymbols() {
+        String actual = new Anagrams().reversesLettersInWords("ддд5,fff");
+        String expected = "fff5,ддд";
+        assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnAsManySpacesBeginAndEndStringReversNotLatinLettersInWords_whenSeveralSpacesBeginAndEndStringWordsWithNotLatinLetters() {
-        assertEquals("   акортс ловмис  ", anagram.reversesLettersInWords("   строка символ  "));
+    void reversesLettersInWords_shouldReturnReversStringLeaveSpacesInPlace_whenInputContainMultipleSpacesBeginAndEndStringAndNotLatinLetters() {
+        String actual = new Anagrams().reversesLettersInWords("   строка символ  ");
+        String expected = "   акортс ловмис  ";
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void reversesLettersInWord_ShouldLeaveSymbolsInPlace_whenInputContainBeginSeveralSymbols(){
+       String actual = new Anagrams().reversesLettersInWords("$#&jfks");
+       String expected = "$#&skfj";
+       assertEquals(expected, actual);
     }
 }
