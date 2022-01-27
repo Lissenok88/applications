@@ -106,14 +106,14 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReverseWordsLeaveNumberInPlace_whenInputContainSeveralWords() {
+    void reversesLettersInWords_shouldReturnReverseWordsLeaveNumbersInPlace_whenInputContainSeveralWords() {
         String actual = new Anagrams().reversesLettersInWords("dba fd1s 2gd2f");
         String expected = "abd sd1f 2fd2g";
         assertEquals(expected, actual);
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnLeaveSpacesInPlace_whenInputContainMultipleSpacesBeginAndEndString() {
+    void reversesLettersInWords_shouldLeaveSpacesInPlace_whenInputContainMultipleSpacesBeginAndEndString() {
         String actual = new Anagrams().reversesLettersInWords("   some string   ");
         String expected = "   emos gnirts   ";
         assertEquals(expected, actual);
@@ -162,7 +162,7 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReverseStringLeaveSpacesInPlace_whenInputContainMultipleSpacesBeginAndEndStringAndNotLatinLetters() {
+    void reversesLettersInWords_shouldReturnReverseWordsLeaveSpacesInPlace_whenInputContainMultipleSpacesBeginAndEndStringAndNotLatinLetters() {
         String actual = new Anagrams().reversesLettersInWords("   строка символ  ");
         String expected = "   акортс ловмис  ";
         assertEquals(expected, actual);
