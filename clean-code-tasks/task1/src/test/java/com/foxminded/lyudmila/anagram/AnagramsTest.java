@@ -106,7 +106,7 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReversStringLeaveNumberInPlace_whenInputContainSeveralWords() {
+    void reversesLettersInWords_shouldReturnReversWordsLeaveNumberInPlace_whenInputContainSeveralWords() {
         String actual = new Anagrams().reversesLettersInWords("dba fd1s 2gd2f");
         String expected = "abd sd1f 2fd2g";
         assertEquals(expected, actual);
@@ -127,7 +127,7 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnReverseString_whenInputContainSeveralWordsWithNotLatinLetters() {
+    void reversesLettersInWords_shouldReturnReverseWords_whenInputContainSeveralWordsWithNotLatinLetters() {
         String actual = new Anagrams().reversesLettersInWords("строка буква");
         String expected = "акортс авкуб";
         assertEquals(expected, actual);
