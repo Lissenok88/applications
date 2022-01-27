@@ -31,7 +31,7 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSeveralSpaces_whenSeveralSpaces() {
+    void reversesLettersInWords_shouldReturnAsManySpaces_whenOnlySpaces() {
         assertEquals("   ", anagram.reversesLettersInWords("   "));
     }
 
@@ -41,92 +41,92 @@ public class AnagramsTest {
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnTwoSpacesAndSymbol_whenTwoSpacesAndSymbol() {
+    void reversesLettersInWords_shouldReturnTwoSpacesAndSymbolOnSamePlace_whenTwoSpacesAndSymbol() {
         assertEquals("  2", anagram.reversesLettersInWords("  2"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnTwoWordsWithTwoSpaces_whenTwoWordsWithTwoSpaces() {
+    void reversesLettersInWords_shouldReturnTwoSpacesBeforeEachWordAndReverseLatinLettersAndSymbolOnSamePlaceInWords_whenTwoSpacesBeforeEachWordAndWordsWithLatinLettersAndSymbol() {
         assertEquals("  fj2k  kj2f", anagram.reversesLettersInWords("  kj2f  fj2k"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSomeIdenticalLetters_whenSomeIdenticalLetters() {
+    void reversesLettersInWords_shouldReturnReversSeveralIdenticalLatinLettersInWord_whenWordWithSeveralIdenticalLatinLetters() {
         assertEquals("aaa", anagram.reversesLettersInWords("aaa"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSomeIdenticalLettersInUpAndLow_whenSomeIdenticalLettersInUpAndLow() {
+    void reversesLettersInWords_shouldReturnReverseSeveralIdenticalLatinLettersInLowerAndUpperCaseInWord_whenWordWithSeveralIdenticalLatinLettersInLowerAndUpperCase() {
         assertEquals("aaaAa", anagram.reversesLettersInWords("aAaaa"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSomeIdenticalLettersAndSymbol_whenSomeIdenticalLettersAndSymbol() {
+    void reversesLettersInWords_shouldReturnReversSeveralIdenticalLatinLettersAndSymbolOnSamePlace_whenWordWithSeveralIdenticalLatinLettersAndSymbol() {
         assertEquals("aa2a", anagram.reversesLettersInWords("aa2a"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSameUpperAndLowerLettersMixed_whenUpperAndLowerLettersMixed() {
+    void reversesLettersInWords_shouldReturnReverseLatinLettersInUpperAndLowerCaseInWord_whenWordWithLatinLettersInUpperAndLowerCase() {
         assertEquals("abcAb", anagram.reversesLettersInWords("bAcba"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnUpLowLettersMixedAndSymbol_whenUpLowLettersMixedAndSymbol() {
+    void reversesLettersInWords_shouldReturnReverseLatinLettersInUpperAndLowerCaseSymbolOnSamePlaceInWord_whenWordWithLatinLettersInUpperAndLowerCaseAndSymbol() {
         assertEquals("aacA2b", anagram.reversesLettersInWords("bAca2a"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnDifferentLetters_whenDifferentLetters() {
+    void reversesLettersInWords_shouldReturnReverseDifferentLatinLettersInLowerCaseInWord_whenWordWithDifferentLatinLettersInLowerCase() {
         assertEquals("abcd", anagram.reversesLettersInWords("dcba"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnOnlySymbols_whenOnlySymbols() {
+    void reversesLettersInWords_shouldReturnOnlySymbolsOnSamePlaceInWord_whenWordOnlySymbols() {
         assertEquals("+<>", anagram.reversesLettersInWords("+<>"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSeveralWords_whenSeveralWords() {
+    void reversesLettersInWords_shouldReturnReversLatinLettersInWordsSymbolsOnSamePlace_whenSeveralWordsWithLatinLettersAndSymbols() {
         assertEquals("abd sd1f 2fd2g", anagram.reversesLettersInWords("dba fd1s 2gd2f"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSomeSpacesBeforeAndAfterWords_whenSomeSpacesBeforeAndAfterWords() {
+    void reversesLettersInWords_shouldReturnAsManySpacesBeginAndEndStringReversLatinLettersInWords_whenSeveralSpacesBeginAndEndStringWordsWithLatinLetters() {
         assertEquals("   emos gnirts   ", anagram.reversesLettersInWords("   some string   "));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnWordWithNotLatinLetters_whenWordWithNotLatinLetters() {
+    void reversesLettersInWords_shouldReturnReversNotLatinLettersInWord_whenWordWithNotLatinLetters() {
         assertEquals("акортс", anagram.reversesLettersInWords("строка"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnWordsWithNotLatinLetters_whenWordsWithNotLatinLetters() {
+    void reversesLettersInWords_shouldReturnReverseNotLatinLettersInWords_whenWordsWithNotLatinLetters() {
         assertEquals("акортс авкуб", anagram.reversesLettersInWords("строка буква"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnWordWithNotLatinLettersAndSymbol_whenWordWithNotLatinLettersAndSymbol() {
+    void reversesLettersInWords_shouldReturnReversNotLatinLettersAndSymbolOnSamePlaceInWord_whenWordWithNotLatinLettersAndSymbol() {
         assertEquals("акор2тс", anagram.reversesLettersInWords("стро2ка"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSomeIdenticalNotLatinLetters_whenWordWithSomeIdenticalNotLatinLetters() {
+    void reversesLettersInWords_shouldReturnReversSeveralIdenticalNotLatinLettersInWord_whenWordWithSeveralIdenticalNotLatinLetters() {
         assertEquals("ддд", anagram.reversesLettersInWords("ддд"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnSomeIdenticalInUpAndLowNotLatin_whenSomeIdenticalInUpAndLowNotLatin() {
+    void reversesLettersInWords_shouldReturnReverseSeveralIdenticalNotLatinLettersInLowerAndUpperCaseInWord_whenWordWithSeveralIdenticalNotLatinLettersInLowerAndUpperCase() {
         assertEquals("дДддд", anagram.reversesLettersInWords("дддДд"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnLatinAndNotLatinLettersAndSymbols_whenLatinAndNotLatinLettersAndSymbols() {
+    void reversesLettersInWords_shouldReturnReversLatinAndNotLatinLettersAndAllSymbolsOnSamePlaceInWord_whenWordWithLatinAndNotLatinLettersAndDifferentSymbols() {
         assertEquals("fff5,ддд", anagram.reversesLettersInWords("ддд5,fff"));
     }
 
     @Test
-    void reversesLettersInWords_shouldReturnNotLatinLettersAndSomeSpaces_whenNotLatinLettersAndSomeSpaces() {
+    void reversesLettersInWords_shouldReturnAsManySpacesBeginAndEndStringReversNotLatinLettersInWords_whenSeveralSpacesBeginAndEndStringWordsWithNotLatinLetters() {
         assertEquals("   акортс ловмис  ", anagram.reversesLettersInWords("   строка символ  "));
     }
 }
