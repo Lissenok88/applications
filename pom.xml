@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.foxminded.lyudmila</groupId>
-    <artifactId>anagram</artifactId>
-    <version>1.0 -SNAPSHOT</version>
+    <artifactId>clean-code-tasks</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
