@@ -1,128 +1,175 @@
 package com.foxminded.lyudmila.integer.division;
 
-import java.util.ArrayList;
-
 public class IntegerDivision {
-    private final ArrayList<String> result = new ArrayList<>();
-    private final StringBuilder quotient = new StringBuilder();
-    private int step = 0;
-
-    public String integerDivisionColumn(int fullDividend, int divisor) {
-        if (divisor == 0) {
+    public String integerDivisionColumn(int dividend, int divisor) {
+        if (isIntegerZero(divisor)) {
             return "Cannot divide by zero";
         }
-        fullDividend = Math.abs(fullDividend);
+        dividend = Math.abs(dividend);
         divisor = Math.abs(divisor);
-        if (fullDividend < divisor) {
-            return formationResultWhenDividendZero(fullDividend, divisor);
+        if (dividend < divisor) {
+            return formationResultWhenResultIsZero(dividend, divisor);
         }
-        StringBuilder dividendDigits = new StringBuilder(Integer.toString(fullDividend));
-        return divisionColumn(dividendDigits, divisor);
+        return divisionColumn(dividend, divisor);
 
     }
 
-    private String divisionColumn(StringBuilder dividendDigits, int divisor) {
+    private String divisionColumn(int fullDividend, int divisor) {
         StringBuilder dividend = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         int dividendNumber;
+        int step = 0;
         int count = 0;
 
-        for (int i = 0; i < dividendDigits.length(); i++) {
-            dividend.append(dividendDigits.charAt(i));
+        createdFirstString(fullDividend, divisor, result);
+        int length = result.length();
+        for (int i = 0; i < Integer.toString(fullDividend).length(); i++) {
+            dividend.append(Integer.toString(fullDividend).charAt(i));
             dividendNumber = Integer.parseInt(dividend.toString());
             if (dividendNumber >= divisor) {
+                result.append(step + "\r\n");
+                result.append(length);
                 dividend.delete(0, dividend.length());
-                dividend.append(calculationDivision(dividendNumber, divisor, dividendDigits));
+                dividend.append(calculationDivision(dividendNumber, divisor, result));
+                step = searchStep(result);
+                result.delete(result.length() - Integer.toString(step).length() - 1, result.length());
+                result.append("\n");
                 count = 0;
             } else {
                 count++;
-                if (dividendNumber == 0 && i < dividendDigits.length()) {
-                    quotient.append(0);
+                if (dividendNumber == 0 && i < Integer.toString(fullDividend).length()) {
+                    updateFirstStrings(0, result);
                     step++;
                 } else {
-                    if (count > 0 && result.size() > 1) quotient.append(0);
+                    if (count > 0 && step > 0 && result.length() > 1) updateFirstStrings(0, result);
                 }
             }
         }
-        modificationFirstStrings(dividend);
-        return convertingArrayListInString(result);
+        if (Integer.parseInt(dividend.toString()) == 0) {
+            step -= dividend.length();
+        }
+        addSpaces(step, result);
+        result.append(" " + dividend);
+        return result.toString();
     }
 
-    private String calculationDivision(int dividendNumber, int divisor, StringBuilder dividendDigits) {
+    private String calculationDivision(int dividendNumber, int divisor, StringBuilder result) {
         StringBuilder dividend = new StringBuilder();
+        int length = searchLength(result) + 1;
         int multiplier = dividendNumber / divisor;
         int productNumber = divisor * multiplier;
-        if (result.size() > 1) {
-            formationStrings(dividendNumber, productNumber, step);
-            quotient.append(multiplier);
+        int step = searchStep(result);
+        if (result.length() > length) {
+            formationStrings(dividendNumber, productNumber, result);
+            updateFirstStrings(multiplier, result);
         } else {
-            formationFirstStrings(dividendDigits, dividendNumber, productNumber, divisor);
-            quotient.append(multiplier);
+            formationFirstStrings(dividendNumber, productNumber, result);
+            updateFirstStrings(multiplier, result);
         }
         step += Integer.toString(dividendNumber).length();
         dividend.append(dividendNumber - productNumber);
         if (Integer.parseInt(dividend.toString()) != 0) {
             step -= dividend.length();
         }
+        result.append(step);
         return dividend.toString();
     }
 
-    private void formationFirstStrings(StringBuilder dividendDigits, int dividendNum, int productNum, int divisor) {
-        String spaces = countSpaces(dividendDigits.length() - Integer.toString(productNum).length());
-        String dash = countDash(Integer.toString(dividendNum).length());
-        result.add("_" + dividendDigits + "|" + divisor + "\n");
-        result.add(" " + productNum + spaces + "|");
-        result.add(" " + dash + spaces + "|");
+    private void createdFirstString(int fullDividend, int divisor, StringBuilder result) {
+        result.append("_" + fullDividend + "|" + divisor + "\r\n");
+        addSpaces(Integer.toString(fullDividend).length() + 1, result);
+        result.append("|\r\n");
+        addSpaces(Integer.toString(fullDividend).length() + 1, result);
+        result.append("|\r\n");
     }
 
-    private void formationStrings(int dividendNumber, int productNumber, int step) {
-        int sizeDividendNumber = Integer.toString(dividendNumber).length();
-        int sizeProductNumber = Integer.toString(productNumber).length();
-        String spaces = countSpaces(sizeDividendNumber - sizeProductNumber);
-        String dash = countDash(sizeDividendNumber);
-        result.add(countSpaces(step) + "_" + dividendNumber + "\n");
-        result.add(countSpaces(step + 1) + spaces + productNumber + "\n");
-        result.add(countSpaces(step + 1) + dash + "\n");
+    private void formationFirstStrings(int dividendNum, int productNum, StringBuilder result) {
+        int step = searchStep(result);
+        result.delete(result.length() - Integer.toString(step).length() - 1, result.length());
+        result.append("\n");
+        int[] index = searchFirstStrings(result);
+        int j = index[0] + 2 + Integer.toString(productNum).length();
+        result.replace(index[0] + 2, j, Integer.toString(productNum));
+        String dash = countDashes(Integer.toString(dividendNum).length());
+        j = index[1] + 2 + Integer.toString(dividendNum).length();
+        result.replace(index[1] + 2, j, dash);
     }
 
-    private void modificationFirstStrings(StringBuilder dividend) {
-        if (Integer.parseInt(dividend.toString()) == 0) {
-            step -= dividend.length();
-        }
-        result.add(countSpaces(step) + " " + dividend);
-        result.set(1, result.get(1) + countDash(quotient.length()) + "\n");
-        result.set(2, result.get(2) + quotient + "\n");
+    private void updateFirstStrings(int multiplier, StringBuilder result) {
+        int[] index = searchFirstStrings(result);
+        result.insert(index[1] - 1, countDashes(Integer.toString(multiplier).length()));
+        result.insert(index[2], multiplier);
     }
 
-    private String convertingArrayListInString(ArrayList<String> arrayData) {
+    private void formationStrings(int dividendNum, int productNum, StringBuilder result) {
+        int sizeDividendNum = Integer.toString(dividendNum).length();
+        int sizeProductNum = Integer.toString(productNum).length();
+        int step = searchStep(result);
+        result.delete(result.length() - Integer.toString(step).length() - 1, result.length());
+        result.append("\n");
+        addSpaces(step, result);
+        result.append("_" + dividendNum + "\r\n" + " ");
+        addSpaces(step, result);
+        addSpaces((sizeDividendNum - sizeProductNum), result);
+        result.append(productNum + "\r\n");
+        addSpaces(step + 1, result);
+        addDashes(sizeDividendNum, result);
+        result.append("\r\n");
+    }
+
+    private String formationResultWhenResultIsZero(int dividend, int divisor) {
         StringBuilder result = new StringBuilder();
-        for (String str : arrayData) {
-            result.append(str);
-        }
+        result.append(dividend + "|" + divisor + "\r\n");
+        addSpaces(Integer.toString(dividend).length(), result);
+        result.append("|");
+        addDashes(Integer.toString(divisor).length(), result);
+        result.append("\r\n");
+        addSpaces(Integer.toString(dividend).length(), result);
+        result.append("|0");
         return result.toString();
     }
 
-    private String formationResultWhenDividendZero(int dividend, int divisor) {
-        String dash = countDash(Integer.toString(divisor).length());
-        String spaces = countSpaces(Integer.toString(dividend).length());
-
-        result.add(dividend + "|" + divisor + "\n");
-        result.add(spaces + "|" + dash + "\n");
-        result.add(spaces + "|0");
-
-        return convertingArrayListInString(result);
-    }
-
-    private String countSpaces(int iterator) {
-        int i = 1;
-        StringBuilder spaces = new StringBuilder();
-        while (i <= iterator) {
-            spaces.append(" ");
-            i++;
+    private int[] searchFirstStrings(StringBuilder result) {
+        int[] index = new int[3];
+        for (int i = 0, j = 0; i < result.length(); i++) {
+            if (result.charAt(i) == '\n') {
+                index[j] = i;
+                j++;
+            }
+            if (j == 3) {
+                break;
+            }
         }
-        return spaces.toString();
+        return index;
     }
 
-    private String countDash(int iterator) {
+    private int searchStep(StringBuilder result) {
+        int i = result.lastIndexOf("\r\n");
+        String step = result.substring(i + 2);
+        return Integer.parseInt(step);
+    }
+
+    private int searchLength(StringBuilder result) {
+        String length;
+        int i = result.lastIndexOf("\r\n");
+        length = result.substring(i + 2);
+        result.delete(i, result.length());
+        return Integer.parseInt(length);
+    }
+
+    private void addSpaces(int iterator, StringBuilder result) {
+        for (int i = 0; i < iterator; i++) {
+            result.append(" ");
+        }
+    }
+
+    private void addDashes(int iterator, StringBuilder result) {
+        for (int i = 0; i < iterator; i++) {
+            result.append("-");
+        }
+    }
+
+    private String countDashes(int iterator) {
         int i = 1;
         StringBuilder dash = new StringBuilder();
         while (i <= iterator) {
@@ -130,8 +177,9 @@ public class IntegerDivision {
             i++;
         }
         return dash.toString();
-
-
     }
 
+    public static Boolean isIntegerZero (int number) {
+        return  number == 0;
+    }
 }
