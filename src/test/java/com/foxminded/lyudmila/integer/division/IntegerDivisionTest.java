@@ -9,7 +9,7 @@ public class IntegerDivisionTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/divisionWithRemainder.csv")
-    void integerDivisionColumn_shouldReturnDivisionWithRemainder_whenInputIntegerNumbers(int param1, int param2, String expected) {
+    void integerDivisionColumn_shouldReturnDivisionWithRemainder_whenInputAnyNumber(int param1, int param2, String expected) {
         String actual = new IntegerDivision().integerDivisionColumn(param1, param2);
         assertEquals(expected, actual);
     }
@@ -23,7 +23,7 @@ public class IntegerDivisionTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/divisionWithoutRemainder.csv")
-    void integerDivisionColumn_shouldReturnDivisionWithoutRemainder_whenInputIntegerNumbers(int param1, int param2, String expected) {
+    void integerDivisionColumn_shouldReturnDivisionWithoutRemainder_whenInputAnyNumber(int param1, int param2, String expected) {
         String actual = new IntegerDivision().integerDivisionColumn(param1, param2);
         assertEquals(expected, actual);
     }
@@ -37,7 +37,7 @@ public class IntegerDivisionTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/dividendOrDivisorLessZero.csv")
-    void integerDivisionColumn_shouldReturnDivisionModule_whenInputDividendOrDivisorLessZero(int param1, int param2, String expected) {
+    void integerDivisionColumn_shouldReturnDivisionWithoutLossOfSign_whenInputDividendOrDivisorLessZero(int param1, int param2, String expected) {
         String actual = new IntegerDivision().integerDivisionColumn(param1, param2);
         assertEquals(expected, actual);
     }
