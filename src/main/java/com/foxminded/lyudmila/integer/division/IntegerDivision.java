@@ -115,7 +115,7 @@ public class IntegerDivision {
         addSpaces(spacesCount, result, result.length() - context.getRemainderSize());
     }
 
-    private String formResultWhenResultIsZero(int dividend, int divisor) {
+    private String formResultWhenResultIsZero(final int dividend, int divisor) {
         StringBuilder result = new StringBuilder();
 
         result.append(dividend);
@@ -132,15 +132,15 @@ public class IntegerDivision {
         return result.toString();
     }
 
-    private void addSpaces(int count, StringBuilder result) {
+    private void addSpaces(final int count, StringBuilder result) {
         result.append(" ".repeat(Math.max(0, count)));
     }
 
-    private void addSpaces(int count, StringBuilder result, int index) {
+    private void addSpaces(final int count, StringBuilder result, final int index) {
         result.insert(index, " ".repeat(Math.max(0, count)));
     }
 
-    private void addDashes(int count, StringBuilder result) {
+    private void addDashes(final int count, StringBuilder result) {
         result.append("-".repeat(Math.max(0, count)));
     }
 }
