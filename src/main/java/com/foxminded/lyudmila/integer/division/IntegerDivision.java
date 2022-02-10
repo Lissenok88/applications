@@ -15,25 +15,26 @@ public class IntegerDivision {
     }
 
     private String divisionColumn(int dividend, int divisor) {
-        DivisionContext context = new DivisionContext();
-        context.setProduct(dividend / divisor);
-        context.setDividend(Math.abs(dividend));
-        context.setDivisor(Math.abs(divisor));
-        context.setDividendLength((int) Math.log10(context.getDividend()) + 1);
-        int[] productDigits = splitToDigits(context.getProduct());
-        int[] remainders = new int[productDigits.length];
-        remainders[0] = (context.getDividend() % context.getDivisor()) * 10;
+        final int product = dividend / divisor;
+        dividend = Math.abs(dividend);
+        divisor = Math.abs(divisor);
+        final int dividendSize = (int) Math.log10(dividend) + 1;
+        final int[] productDigits = splitToDigits(product);
+        final int[] remainders = new int[productDigits.length];
+        remainders[0] = (dividend % divisor) * 10;
         for (int i = 1; i < remainders.length; i++) {
-            remainders[i] = (productDigits[i - 1] * context.getDivisor()) + (remainders[i - 1] / 10);
+            remainders[i] = (productDigits[i - 1] * divisor) + (remainders[i - 1] / 10);
         }
+        DivisionContext context = new DivisionContext(dividend, divisor, product, dividendSize);
+
         return formResult(productDigits, remainders, context);
     }
 
-    private int[] splitToDigits(int number) {
+    private int[] splitToDigits(final int number) {
         return IntStream.iterate(Math.abs(number), i -> i > 0, i -> i / 10).map(i -> i % 10).toArray();
     }
 
-    private String formResult(int[] productDigits, int[] remainders, DivisionContext context) {
+    private String formResult(final int[] productDigits, final int[] remainders, DivisionContext context) {
         StringBuilder result = new StringBuilder();
         int subtrahend = productDigits[productDigits.length - 1] * context.getDivisor();
 
@@ -62,7 +63,7 @@ public class IntegerDivision {
         result.append("\r\n");
     }
 
-    private void addSecondLine(DivisionContext context, StringBuilder result, int subtrahend) {
+    private void addSecondLine(DivisionContext context, StringBuilder result, final int subtrahend) {
         result.append(" ");
         context.setStep(result.length());
         result.append(subtrahend);
@@ -80,7 +81,7 @@ public class IntegerDivision {
         result.append("\r\n");
     }
 
-    private void addReminder(DivisionContext context, int remainder, StringBuilder result) {
+    private void addReminder(DivisionContext context, final int remainder, StringBuilder result) {
         result.append("_");
         context.setRemainderSize(result.length());
         result.append(remainder);
@@ -90,11 +91,11 @@ public class IntegerDivision {
         result.append("\r\n ");
     }
 
-    private void addSubtrahend(DivisionContext context, int subtrahend, StringBuilder result) {
+    private void addSubtrahend(DivisionContext context, final int subtrahend, StringBuilder result) {
         int subtrahendSize = result.length();
         result.append(subtrahend);
         subtrahendSize = result.length() - subtrahendSize;
-        int spacesCount = context.getStep() + context.getRemainderSize() - subtrahendSize;
+        final int spacesCount = context.getStep() + context.getRemainderSize() - subtrahendSize;
         addSpaces(spacesCount, result, result.length() - subtrahendSize);
         result.append("\r\n");
     }
@@ -106,11 +107,11 @@ public class IntegerDivision {
     }
 
     private void addLastLine(DivisionContext context, StringBuilder result) {
-        int remainder = context.getDividend() % context.getDivisor();
+        final int remainder = context.getDividend() % context.getDivisor();
         context.setRemainderSize(result.length());
         result.append(remainder);
         context.setRemainderSize(result.length() - context.getRemainderSize());
-        int spacesCount = context.getDividendLength() - context.getRemainderSize() + 1;
+        final int spacesCount = context.getDividendLength() - context.getRemainderSize() + 1;
         addSpaces(spacesCount, result, result.length() - context.getRemainderSize());
     }
 
@@ -118,7 +119,7 @@ public class IntegerDivision {
         StringBuilder result = new StringBuilder();
 
         result.append(dividend);
-        int dividendLength = result.length();
+        final int dividendLength = result.length();
         result.append("|");
         result.append(divisor);
         result.append("\r\n");
