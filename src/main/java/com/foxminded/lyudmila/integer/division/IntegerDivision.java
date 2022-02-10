@@ -15,26 +15,25 @@ public class IntegerDivision {
     }
 
     private String divisionColumn(int dividend, int divisor) {
-        final int product = dividend / divisor;
-        dividend = Math.abs(dividend);
-        divisor = Math.abs(divisor);
-        int dividendSize = (int) Math.log10(dividend) + 1;
-        final int[] productDigits = splitToDigits(product);
-        final int[] remainders = new int[productDigits.length];
-        remainders[0] = (dividend % divisor) * 10;
+        DivisionContext context = new DivisionContext();
+        context.setProduct(dividend / divisor);
+        context.setDividend(Math.abs(dividend));
+        context.setDivisor(Math.abs(divisor));
+        context.setDividendLength((int) Math.log10(context.getDividend()) + 1);
+        int[] productDigits = splitToDigits(context.getProduct());
+        int[] remainders = new int[productDigits.length];
+        remainders[0] = (context.getDividend() % context.getDivisor()) * 10;
         for (int i = 1; i < remainders.length; i++) {
-            remainders[i] = (productDigits[i - 1] * divisor) + (remainders[i - 1] / 10);
+            remainders[i] = (productDigits[i - 1] * context.getDivisor()) + (remainders[i - 1] / 10);
         }
-        DivisionContext context = new DivisionContext(dividend, divisor, product, dividendSize);
-
         return formResult(productDigits, remainders, context);
     }
 
-    private int[] splitToDigits(final int number) {
+    private int[] splitToDigits(int number) {
         return IntStream.iterate(Math.abs(number), i -> i > 0, i -> i / 10).map(i -> i % 10).toArray();
     }
 
-    private String formResult(final int[] productDigits, final int[] remainders, DivisionContext context) {
+    private String formResult(int[] productDigits, int[] remainders, DivisionContext context) {
         StringBuilder result = new StringBuilder();
         int subtrahend = productDigits[productDigits.length - 1] * context.getDivisor();
 
@@ -42,10 +41,10 @@ public class IntegerDivision {
         addSecondLine(context, result, subtrahend);
         addThirdLine(context, result);
         for (int i = remainders.length - 1; i > 0; i--) {
-            subtrahend = context.getDivisor() * productDigits[i - 1];
-            if (subtrahend == 0) {
+            if (productDigits[i - 1] == 0) {
                 continue;
             }
+            subtrahend = context.getDivisor() * productDigits[i - 1];
             context.setStep(context.getDividendLength() - i + 1);
             addReminder(context, remainders[i], result);
             addSubtrahend(context, subtrahend, result);
@@ -95,8 +94,8 @@ public class IntegerDivision {
         int subtrahendSize = result.length();
         result.append(subtrahend);
         subtrahendSize = result.length() - subtrahendSize;
-        int iterator = context.getStep() + context.getRemainderSize() - subtrahendSize;
-        addSpaces(iterator, result, result.length() - subtrahendSize);
+        int spacesCount = context.getStep() + context.getRemainderSize() - subtrahendSize;
+        addSpaces(spacesCount, result, result.length() - subtrahendSize);
         result.append("\r\n");
     }
 
@@ -111,8 +110,8 @@ public class IntegerDivision {
         context.setRemainderSize(result.length());
         result.append(remainder);
         context.setRemainderSize(result.length() - context.getRemainderSize());
-        int iterator = context.getDividendLength() - context.getRemainderSize() + 1;
-        addSpaces(iterator, result, result.length() - context.getRemainderSize());
+        int spacesCount = context.getDividendLength() - context.getRemainderSize() + 1;
+        addSpaces(spacesCount, result, result.length() - context.getRemainderSize());
     }
 
     private String formResultWhenResultIsZero(int dividend, int divisor) {
@@ -132,15 +131,15 @@ public class IntegerDivision {
         return result.toString();
     }
 
-    private void addSpaces(int iterator, StringBuilder result) {
-        result.append(" ".repeat(Math.max(0, iterator)));
+    private void addSpaces(int count, StringBuilder result) {
+        result.append(" ".repeat(Math.max(0, count)));
     }
 
-    private void addSpaces(int iterator, StringBuilder result, int index) {
-        result.insert(index, " ".repeat(Math.max(0, iterator)));
+    private void addSpaces(int count, StringBuilder result, int index) {
+        result.insert(index, " ".repeat(Math.max(0, count)));
     }
 
-    private void addDashes(int iterator, StringBuilder result) {
-        result.append("-".repeat(Math.max(0, iterator)));
+    private void addDashes(int count, StringBuilder result) {
+        result.append("-".repeat(Math.max(0, count)));
     }
 }
