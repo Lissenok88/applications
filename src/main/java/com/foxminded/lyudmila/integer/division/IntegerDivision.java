@@ -1,5 +1,7 @@
 package com.foxminded.lyudmila.integer.division;
 
+import java.util.stream.IntStream;
+
 public class IntegerDivision {
 
     public String integerDivisionColumn(int dividend, int divisor) {
@@ -7,133 +9,138 @@ public class IntegerDivision {
             return "Cannot divide by zero";
         }
         if (Math.abs(dividend) < Math.abs(divisor)) {
-            return printWhenResultIsZero(dividend, divisor);
+            return formResultWhenResultIsZero(dividend, divisor);
         }
         return divisionColumn(dividend, divisor);
     }
 
-    private String divisionColumn(int fullDividend, int divisor) {
-        int quotient = fullDividend / divisor;
-        DivisionContext context = new DivisionContext(Math.abs(fullDividend), Math.abs(divisor), quotient);
-        StringBuilder result = new StringBuilder();
-        String strFullDividend = Integer.toString(context.getFullDividend());
-        context.setDividend(new StringBuilder());
-        context.setStep(0);
+    private String divisionColumn(int dividend, int divisor) {
+        final int product = dividend / divisor;
+        dividend = Math.abs(dividend);
+        divisor = Math.abs(divisor);
+        int dividendSize = (int) Math.log10(dividend) + 1;
+        final int[] productDigits = splitToDigits(product);
+        final int[] remainders = new int[productDigits.length];
+        remainders[0] = (dividend % divisor) * 10;
+        for (int i = 1; i < remainders.length; i++) {
+            remainders[i] = (productDigits[i - 1] * divisor) + (remainders[i - 1] / 10);
+        }
+        DivisionContext context = new DivisionContext(dividend, divisor, product, dividendSize);
 
-        for (int i = 0; i < strFullDividend.length(); i++) {
-            context.getDividend().append(strFullDividend.charAt(i));
-            String strDividend = context.getDividend().toString();
-            context.setDividendNumber(Integer.parseInt(strDividend));
-            if (context.getDividendNumber() >= context.getDivisor()) {
-                calculationDivision(context, result);
-            } else {
-                if (context.getDividendNumber() == 0) {
-                    context.setStep(context.getStep() + 1);
-                }
+        return formResult(productDigits, remainders, context);
+    }
+
+    private int[] splitToDigits(final int number) {
+        return IntStream.iterate(Math.abs(number), i -> i > 0, i -> i / 10).map(i -> i % 10).toArray();
+    }
+
+    private String formResult(final int[] productDigits, final int[] remainders, DivisionContext context) {
+        StringBuilder result = new StringBuilder();
+        int subtrahend = productDigits[productDigits.length - 1] * context.getDivisor();
+
+        addFirstLine(context, result);
+        addSecondLine(context, result, subtrahend);
+        addThirdLine(context, result);
+        for (int i = remainders.length - 1; i > 0; i--) {
+            subtrahend = context.getDivisor() * productDigits[i - 1];
+            if (subtrahend == 0) {
+                continue;
             }
+            context.setStep(context.getDividendLength() - i + 1);
+            addReminder(context, remainders[i], result);
+            addSubtrahend(context, subtrahend, result);
+            addSeparator(context, result);
         }
-        String strDividend = context.getDividend().toString();
-        if (Integer.parseInt(strDividend) == 0) {
-            context.setStep(context.getStep() - context.getDividend().length());
-        }
-        printEndLine(context, result);
+        addLastLine(context, result);
         return result.toString();
     }
 
-    private void calculationDivision(DivisionContext context, StringBuilder result) {
-        int multiplier = context.getDividendNumber() / context.getDivisor();
-        context.setProductNumber(context.getDivisor() * multiplier);
-        if (result.length() > 0) {
-            printStrings(context, result);
-        } else {
-            printFirstLine(context, result);
-            printSecondLine(context, result);
-            printThirdLine(context, result);
-        }
-        context.setStep(context.getStep() + findNumberLength(context.getDividendNumber()));
-        context.getDividend().delete(0, context.getDividend().length());
-        context.getDividend().append(context.getDividendNumber() - context.getProductNumber());
-        if (Integer.parseInt(context.getDividend().toString()) != 0) {
-            context.setStep(context.getStep() - context.getDividend().length());
-        }
-    }
-
-    private int findNumberLength(int number) {
-        return (number == 0) ? 1 : (int) Math.log10(number) + 1;
-    }
-
-    private void printFirstLine(DivisionContext context, StringBuilder result) {
+    private void addFirstLine(DivisionContext context, StringBuilder result) {
         result.append("_");
-        result.append(context.getFullDividend());
+        result.append(context.getDividend());
         result.append("|");
         result.append(context.getDivisor());
         result.append("\r\n");
     }
 
-    private void printSecondLine(DivisionContext context, StringBuilder result) {
-        int iterator = findNumberLength(context.getFullDividend()) - findNumberLength(context.getProductNumber());
+    private void addSecondLine(DivisionContext context, StringBuilder result, int subtrahend) {
         result.append(" ");
-        result.append(context.getProductNumber());
-        printSpaces(iterator, result);
+        context.setStep(result.length());
+        result.append(subtrahend);
+        context.setStep(context.getDividendLength() - (result.length() - context.getStep()));
+        addSpaces(context.getStep(), result);
         result.append("|---\r\n");
     }
 
-    private void printThirdLine(DivisionContext context, StringBuilder result) {
-        int iterator = findNumberLength(context.getFullDividend()) - findNumberLength(context.getProductNumber());
+    private void addThirdLine(DivisionContext context, StringBuilder result) {
         result.append(" ");
-        printDashes(findNumberLength(context.getDividendNumber()), result);
-        printSpaces(iterator, result);
+        addDashes(context.getDividendLength() - context.getStep(), result);
+        addSpaces(context.getStep(), result);
         result.append("|");
-        result.append(context.getQuotient());
+        result.append(context.getProduct());
         result.append("\r\n");
     }
 
-    private void printStrings(DivisionContext context, StringBuilder result) {
-        int dividendNumLength = findNumberLength(context.getDividendNumber());
-        int productNumLength = findNumberLength(context.getProductNumber());
-        printSpaces(context.getStep(), result);
+    private void addReminder(DivisionContext context, int remainder, StringBuilder result) {
         result.append("_");
-        result.append(context.getDividendNumber());
-        result.append("\r\n" + " ");
-        printSpaces(context.getStep(), result);
-        printSpaces((dividendNumLength - productNumLength), result);
-        result.append(context.getProductNumber());
-        result.append("\r\n");
-        printSpaces(context.getStep() + 1, result);
-        printDashes(dividendNumLength, result);
+        context.setRemainderSize(result.length());
+        result.append(remainder);
+        context.setRemainderSize(result.length() - context.getRemainderSize());
+        context.setStep(context.getStep() - context.getRemainderSize());
+        addSpaces(context.getStep(), result, result.length() - context.getRemainderSize() - 1);
+        result.append("\r\n ");
+    }
+
+    private void addSubtrahend(DivisionContext context, int subtrahend, StringBuilder result) {
+        int subtrahendSize = result.length();
+        result.append(subtrahend);
+        subtrahendSize = result.length() - subtrahendSize;
+        int iterator = context.getStep() + context.getRemainderSize() - subtrahendSize;
+        addSpaces(iterator, result, result.length() - subtrahendSize);
         result.append("\r\n");
     }
 
-    private void printEndLine(DivisionContext context, StringBuilder result) {
-        printSpaces(context.getStep(), result);
-        result.append(" ");
-        result.append(context.getDividend());
+    private void addSeparator(DivisionContext context, StringBuilder result) {
+        addSpaces(context.getStep() + 1, result);
+        addDashes(context.getRemainderSize(), result);
+        result.append("\r\n");
     }
 
-    private String printWhenResultIsZero(int dividend, int divisor) {
+    private void addLastLine(DivisionContext context, StringBuilder result) {
+        int remainder = context.getDividend() % context.getDivisor();
+        context.setRemainderSize(result.length());
+        result.append(remainder);
+        context.setRemainderSize(result.length() - context.getRemainderSize());
+        int iterator = context.getDividendLength() - context.getRemainderSize() + 1;
+        addSpaces(iterator, result, result.length() - context.getRemainderSize());
+    }
+
+    private String formResultWhenResultIsZero(int dividend, int divisor) {
         StringBuilder result = new StringBuilder();
-        int dividendLength = findNumberLength(dividend);
+
         result.append(dividend);
+        int dividendLength = result.length();
         result.append("|");
         result.append(divisor);
         result.append("\r\n");
-        printSpaces(dividendLength, result);
-        result.append("|---");
-        result.append("\r\n");
-        printSpaces(dividendLength, result);
+
+        addSpaces(dividendLength, result);
+        result.append("|---\r\n");
+
+        addSpaces(dividendLength, result);
         result.append("|0");
         return result.toString();
     }
 
-    private void printSpaces(int iterator, StringBuilder result) {
-        for (int i = 0; i < iterator; i++) {
-            result.append(" ");
-        }
+    private void addSpaces(int iterator, StringBuilder result) {
+        result.append(" ".repeat(Math.max(0, iterator)));
     }
 
-    private void printDashes(int iterator, StringBuilder result) {
-        for (int i = 0; i < iterator; i++) {
-            result.append("-");
-        }
+    private void addSpaces(int iterator, StringBuilder result, int index) {
+        result.insert(index, " ".repeat(Math.max(0, iterator)));
+    }
+
+    private void addDashes(int iterator, StringBuilder result) {
+        result.append("-".repeat(Math.max(0, iterator)));
     }
 }
