@@ -115,7 +115,7 @@ public class IntegerDivision {
         addSpaces(spacesCount, result, result.length() - context.getRemainderSize());
     }
 
-    private String formResultWhenResultIsZero(final int dividend, int divisor) {
+    private String formResultWhenResultIsZero(final int dividend, final int divisor) {
         StringBuilder result = new StringBuilder();
 
         result.append(dividend);
