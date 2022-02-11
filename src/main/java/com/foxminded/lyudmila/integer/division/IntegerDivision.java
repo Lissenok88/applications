@@ -6,7 +6,7 @@ public class IntegerDivision {
 
     public String integerDivisionColumn(int dividend, int divisor) {
         if (divisor == 0) {
-            return "Cannot divide by zero";
+            throw new ArithmeticException("Cannot divide by zero");
         }
         if (Math.abs(dividend) < Math.abs(divisor)) {
             return formResultWhenResultIsZero(dividend, divisor);
@@ -19,7 +19,7 @@ public class IntegerDivision {
         dividend = Math.abs(dividend);
         divisor = Math.abs(divisor);
         final int dividendSize = (int) Math.log10(dividend) + 1;
-        final int[] productDigits = splitToDigits(product);
+        final int[] productDigits = splitToDigits(Math.abs(product));
         final int[] remainders = new int[productDigits.length];
         remainders[0] = (dividend % divisor) * 10;
         for (int i = 1; i < remainders.length; i++) {
@@ -31,7 +31,7 @@ public class IntegerDivision {
     }
 
     private int[] splitToDigits(final int number) {
-        return IntStream.iterate(Math.abs(number), i -> i > 0, i -> i / 10).map(i -> i % 10).toArray();
+        return IntStream.iterate(number, i -> i > 0, i -> i / 10).map(i -> i % 10).toArray();
     }
 
     private String formResult(final int[] productDigits, final int[] remainders, DivisionContext context) {
@@ -60,7 +60,7 @@ public class IntegerDivision {
         result.append(context.getDividend());
         result.append("|");
         result.append(context.getDivisor());
-        result.append("\r\n");
+        result.append(System.lineSeparator());
     }
 
     private void addSecondLine(DivisionContext context, StringBuilder result, final int subtrahend) {
@@ -69,7 +69,8 @@ public class IntegerDivision {
         result.append(subtrahend);
         context.setStep(context.getDividendLength() - (result.length() - context.getStep()));
         addSpaces(context.getStep(), result);
-        result.append("|---\r\n");
+        result.append("|---");
+        result.append(System.lineSeparator());
     }
 
     private void addThirdLine(DivisionContext context, StringBuilder result) {
@@ -78,7 +79,7 @@ public class IntegerDivision {
         addSpaces(context.getStep(), result);
         result.append("|");
         result.append(context.getProduct());
-        result.append("\r\n");
+        result.append(System.lineSeparator());
     }
 
     private void addReminder(DivisionContext context, final int remainder, StringBuilder result) {
@@ -88,22 +89,23 @@ public class IntegerDivision {
         context.setRemainderSize(result.length() - context.getRemainderSize());
         context.setStep(context.getStep() - context.getRemainderSize());
         addSpaces(context.getStep(), result, result.length() - context.getRemainderSize() - 1);
-        result.append("\r\n ");
+        result.append(System.lineSeparator());
     }
 
     private void addSubtrahend(DivisionContext context, final int subtrahend, StringBuilder result) {
+        result.append(" ");
         int subtrahendSize = result.length();
         result.append(subtrahend);
         subtrahendSize = result.length() - subtrahendSize;
         final int spacesCount = context.getStep() + context.getRemainderSize() - subtrahendSize;
         addSpaces(spacesCount, result, result.length() - subtrahendSize);
-        result.append("\r\n");
+        result.append(System.lineSeparator());
     }
 
     private void addSeparator(DivisionContext context, StringBuilder result) {
         addSpaces(context.getStep() + 1, result);
         addDashes(context.getRemainderSize(), result);
-        result.append("\r\n");
+        result.append(System.lineSeparator());
     }
 
     private void addLastLine(DivisionContext context, StringBuilder result) {
@@ -122,10 +124,11 @@ public class IntegerDivision {
         final int dividendLength = result.length();
         result.append("|");
         result.append(divisor);
-        result.append("\r\n");
+        result.append(System.lineSeparator());
 
         addSpaces(dividendLength, result);
-        result.append("|---\r\n");
+        result.append("|---");
+        result.append(System.lineSeparator());
 
         addSpaces(dividendLength, result);
         result.append("|0");

@@ -13,6 +13,8 @@ public class Main {
             System.out.println(new IntegerDivision().integerDivisionColumn(dividend, divisor));
         } catch (InputMismatchException ex) {
             System.out.println("Incorrect enter.");
+        } catch (ArithmeticException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }
