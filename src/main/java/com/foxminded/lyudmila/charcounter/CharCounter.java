@@ -5,9 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class CharCounter implements Calculate {
-
-    @Override
+public class CharCounter {
     public String calculateUniqueChars(String string) {
         Optional<String> checker = Optional.ofNullable(string);
         string = checker.orElseThrow(() -> new IllegalArgumentException("Invalid Argument"));

@@ -2,15 +2,11 @@ package com.foxminded.lyudmila.charcounter;
 
 import java.util.*;
 
-public class CashingCharCounter extends Decorator {
-    private static Map<String, String> cache = new HashMap<>();
-
-    public CashingCharCounter(Calculate charsCounter) {
-        super(charsCounter);
-    }
+public class CashingCharCounter {
+    private final Map<String, String> cache = new HashMap<>();
 
     public String getUniqueChars(String string) {
-        cache.computeIfAbsent(string, this::calculateUniqueChars);
+        cache.computeIfAbsent(string, key -> new CharCounter().calculateUniqueChars(string));
         return cache.get(string);
     }
 }
