@@ -16,7 +16,7 @@ public class CharCounter {
     }
 
     private String convertResultInString(Map<Character, Integer> result) {
-        return result.keySet().stream().map(key -> "\"" + key + "\" - " + result.get(key) + System.lineSeparator())
-            .collect(Collectors.joining()).trim();
+        return result.keySet().stream().map(key -> "\"" + key + "\" - " + result.get(key))
+            .collect(Collectors.joining(System.lineSeparator()));
     }
 }
