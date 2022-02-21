@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        CashingCharCounter charCounter = new CashingCharCounter(new CharCounter());
+        CachingCharCounter charCounter = new CachingCharCounter(new CharCounter());
         System.out.println("Enter string:");
         String input = scanner.nextLine();
         System.out.println(charCounter.getUniqueChars(input));

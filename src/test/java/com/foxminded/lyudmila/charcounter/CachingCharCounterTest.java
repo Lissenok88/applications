@@ -2,13 +2,12 @@ package com.foxminded.lyudmila.charcounter;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class CashingCharCounterTest {
+class CachingCharCounterTest {
     private final String actual = "hello world";
 
     private final String expected = "\"h\" - 1\r\n" +
@@ -24,12 +23,12 @@ class CashingCharCounterTest {
     CharCounter charCounter;
 
     @Test
-    void cashingCharCounter_shouldMethodCalculateUniqueCharsNotUsed_whenInputValueInCache() {
-        CashingCharCounter cashingCharCounter = new CashingCharCounter(charCounter);
+    void cachingCharCounter_shouldMethodCalculateUniqueCharsNotUsed_whenInputValueInCache() {
+        CachingCharCounter cachingCharCounter = new CachingCharCounter(charCounter);
         Mockito.when(charCounter.calculateUniqueChars(actual)).thenReturn(expected);
-        cashingCharCounter.getUniqueChars(actual);
-        cashingCharCounter.getUniqueChars(actual);
-        cashingCharCounter.getUniqueChars(actual);
+        cachingCharCounter.getUniqueChars(actual);
+        cachingCharCounter.getUniqueChars(actual);
+        cachingCharCounter.getUniqueChars(actual);
         Mockito.verify(charCounter, Mockito.times(1)).calculateUniqueChars(actual);
     }
 }
