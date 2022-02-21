@@ -21,23 +21,15 @@ class CashingCharCounterTest {
         "\"d\" - 1";
 
     @Mock
-    CharCounter charCounter = new CharCounter();
-
-    @InjectMocks
-    CashingCharCounter cashingCharCounter = new CashingCharCounter();
+    CharCounter charCounter;
 
     @Test
     void cashingCharCounter_shouldMethodCalculateUniqueCharsNotUsed_whenInputValueInCache() {
-        cashingCharCounter.getCache().put(actual, expected);
-        cashingCharCounter.getCache().get(actual, key -> charCounter.calculateUniqueChars(actual));
-        Mockito.verify(charCounter, Mockito.times(0)).calculateUniqueChars(actual);
-    }
-
-    @Test
-    void cashingCharCounter_shouldMethodCalculateUniqueCharsUsedOnce_whenCacheIsEmpty() {
+        CashingCharCounter cashingCharCounter = new CashingCharCounter(charCounter);
         Mockito.when(charCounter.calculateUniqueChars(actual)).thenReturn(expected);
-        cashingCharCounter.getCache().get(actual, key -> charCounter.calculateUniqueChars(actual));
-        cashingCharCounter.getCache().get(actual, key -> charCounter.calculateUniqueChars(actual));
+        cashingCharCounter.getUniqueChars(actual);
+        cashingCharCounter.getUniqueChars(actual);
+        cashingCharCounter.getUniqueChars(actual);
         Mockito.verify(charCounter, Mockito.times(1)).calculateUniqueChars(actual);
     }
 }
