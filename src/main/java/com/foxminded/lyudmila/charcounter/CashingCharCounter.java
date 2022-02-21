@@ -1,12 +1,16 @@
 package com.foxminded.lyudmila.charcounter;
 
-import java.util.*;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+
+import java.util.concurrent.TimeUnit;
 
 public class CashingCharCounter {
-    private final Map<String, String> cache = new HashMap<>();
+    Cache<String, String> cache = Caffeine.newBuilder()
+        .expireAfterAccess(5, TimeUnit.MINUTES)
+        .build();
 
     public String getUniqueChars(String string) {
-        cache.computeIfAbsent(string, key -> new CharCounter().calculateUniqueChars(string));
-        return cache.get(string);
+        return cache.get(string, key -> new CharCounter().calculateUniqueChars(string));
     }
 }

@@ -10,9 +10,11 @@ public class Main {
         String string = scanner.nextLine();
         System.out.println(new CharCounter().calculateUniqueChars(string));
 
+        CashingCharCounter cash = new CashingCharCounter();
         System.out.println("Enter string: " + string);
-        System.out.println(new CashingCharCounter().getUniqueChars(string));
-
+        System.out.println(cash.getUniqueChars(string));
+        System.out.println("Enter string: " + string);
+        System.out.println(cash.getUniqueChars(string));
         scanner.close();
     }
 }
