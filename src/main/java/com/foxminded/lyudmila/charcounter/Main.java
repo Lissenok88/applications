@@ -5,12 +5,12 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        CashingCharCounter cash = new CashingCharCounter(new CharCounter());
+        CashingCharCounter charCounter = new CashingCharCounter(new CharCounter());
         System.out.println("Enter string:");
-        String string = scanner.nextLine();
-        System.out.println(cash.getUniqueChars(string));
+        String input = scanner.nextLine();
+        System.out.println(charCounter.getUniqueChars(input));
         System.out.println();
-        System.out.println(cash.getUniqueChars(string));
+        System.out.println(charCounter.getUniqueChars(input));
         scanner.close();
     }
 }
