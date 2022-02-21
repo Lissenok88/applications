@@ -57,13 +57,4 @@ class CashingCharCounterTest {
         cashingCharCounter.cache.get(actual, key -> charCounter.calculateUniqueChars(actual));
         Mockito.verify(charCounter, Mockito.times(1)).calculateUniqueChars(actual);
     }
-
-    /*   @Test
-    void cashingCharCounter_shouldMethodCalculateUniqueCharsUsedOnce_whenCacheIsEmpty1() {
-        Mockito.when(charCounter.calculateUniqueChars(actual)).thenReturn(expected);
-        cashingCharCounter.getUniqueChars(actual);
-        Mockito.verify(charCounter, Mockito.times(1)).calculateUniqueChars(actual);
-    }
-*/
-
 }
