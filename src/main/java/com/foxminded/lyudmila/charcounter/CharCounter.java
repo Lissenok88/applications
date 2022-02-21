@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class CharCounter {
     public String calculateUniqueChars(String string) {
         if (string == null || string.isEmpty()) {
-            throw new IllegalArgumentException("Invalid Argument");
+            throw new IllegalArgumentException("String is empty or null");
         }
         Map<Character, Integer> result = new LinkedHashMap<>();
         string.chars().forEach(charAsInt -> result.merge((char) charAsInt, 1, Integer::sum));
