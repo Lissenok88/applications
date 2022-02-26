@@ -1,0 +1,6 @@
+"/formula1/abbreviations.txt","/formula1/test-wrong-data-time-format/startNoSeparator.log","/formula1/end.log",
+"/formula1/abbreviations.txt","/formula1/test-wrong-data-time-format/startNoAbbreviation.log","/formula1/end.log",
+"/formula1/abbreviations.txt","/formula1/start.log","/formula1/test-wrong-data-time-format/endNoDash.log",
+"/formula1/abbreviations.txt","/formula1/start.log","/formula1/test-wrong-data-time-format/endNoColon.log",
+"/formula1/abbreviations.txt","/formula1/start.log","/formula1/test-wrong-data-time-format/endWrongAbbreviationFormat.log",
+"/formula1/abbreviations.txt","/formula1/test-wrong-data-time-format/startWrongTimeValue.log","/formula1/end.log"
