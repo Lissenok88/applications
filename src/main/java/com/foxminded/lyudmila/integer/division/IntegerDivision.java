@@ -3,8 +3,9 @@ package com.foxminded.lyudmila.integer.division;
 import java.util.stream.IntStream;
 
 public class IntegerDivision {
+    private static final int GET_REMAINDER = 10;
 
-    public String integerDivisionColumn(int dividend, int divisor) {
+    public String integerDivisionColumn(final int dividend, final int divisor) {
         if (divisor == 0) {
             throw new ArithmeticException("Cannot divide by zero");
         }
@@ -18,20 +19,24 @@ public class IntegerDivision {
         final int product = dividend / divisor;
         dividend = Math.abs(dividend);
         divisor = Math.abs(divisor);
-        final int dividendSize = (int) Math.log10(dividend) + 1;
+        final int dividendSize = findNumberLength(dividend);
         final int[] productDigits = splitToDigits(Math.abs(product));
         final int[] remainders = new int[productDigits.length];
-        remainders[0] = (dividend % divisor) * 10;
+        remainders[0] = (dividend % divisor) * GET_REMAINDER;
         for (int i = 1; i < remainders.length; i++) {
-            remainders[i] = (productDigits[i - 1] * divisor) + (remainders[i - 1] / 10);
+            remainders[i] = (productDigits[i - 1] * divisor) + (remainders[i - 1] / GET_REMAINDER);
         }
         DivisionContext context = new DivisionContext(dividend, divisor, product, dividendSize);
 
         return formResult(productDigits, remainders, context);
     }
 
+    private int findNumberLength(final int number) {
+        return (number == 0) ? 1 : (int) Math.log10(number) + 1;
+    }
+
     private int[] splitToDigits(final int number) {
-        return IntStream.iterate(number, i -> i > 0, i -> i / 10).map(i -> i % 10).toArray();
+        return IntStream.iterate(number, i -> i > 0, i -> i / GET_REMAINDER).map(i -> i % GET_REMAINDER).toArray();
     }
 
     private String formResult(final int[] productDigits, final int[] remainders, DivisionContext context) {
